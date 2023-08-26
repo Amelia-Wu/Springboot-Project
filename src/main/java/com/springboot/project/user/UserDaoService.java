@@ -10,15 +10,22 @@ import java.util.function.Predicate;
 @Component
 public class UserDaoService {
     private static List<User> users = new ArrayList<>();
+    private static int usersCount = 0;
 
     static {
-        users.add(new User(1, "Adam", LocalDate.now().minusYears(30)));
-        users.add(new User(2, "Bill", LocalDate.now().minusYears(20)));
-        users.add(new User(3, "Chris", LocalDate.now().minusYears(40)));
+        users.add(new User(++usersCount, "Adam", LocalDate.now().minusYears(30)));
+        users.add(new User(++usersCount, "Bill", LocalDate.now().minusYears(20)));
+        users.add(new User(++usersCount, "Chris", LocalDate.now().minusYears(40)));
     }
 
     public List<User> findAll() {
         return users;
+    }
+
+    public User save(User user) {
+        user.setId(++usersCount);
+        users.add(user);
+        return user;
     }
 
     public User findOne(int id) {
